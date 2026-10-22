@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiduagaria - Plataforma</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('fondo.png') center/cover no-repeat fixed;
+      min-height: 100vh;
+      color: white;
+      animation: fadeIn 1s ease;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .logo-container {
+      display: inline-block;
+      padding: 25px 40px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 25px;
+      backdrop-filter: blur(12px);
+      box-shadow: 
+        0 8px 30px rgba(0,0,0,0.4),
+        inset 0 0 20px rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      margin: 40px 0;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, 
+        rgba(255,255,255,0.1) 0%, 
+        rgba(255,255,255,0.2) 50%, 
+        rgba(255,255,255,0.1) 100%);
+      z-index: 0;
+    }
+
+    .logo {
+      max-width: 360px;
+      height: auto;
+      filter: 
+        drop-shadow(0 4px 15px rgba(0,0,0,0.6))
+        contrast(1.5)
+        brightness(1.25);
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .title {
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .title h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      letter-spacing: 1px;
+      background: linear-gradient(45deg, #fff, #e0e0e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title p {
+      font-size: 1.5rem;
+      opacity: 0.95;
+      letter-spacing: 0.8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .main-button, .module-button {
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.15) 0%, 
+        rgba(255,255,255,0.25) 100%);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 30px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-button:hover, .module-button:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.2) 0%, 
+        rgba(255,255,255,0.3) 100%);
+    }
+
+    .main-button::before, .module-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(255,255,255,0.1) 50%, 
+        transparent 80%);
+      animation: shine 4s infinite;
+    }
+
+    .volver-button {
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.15) 0%, 
+        rgba(255,255,255,0.25) 100%);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,255,255,0.3);
+      width: 80px !important;
+      height: 40px;
+      min-width: 0; !important;
+      font-size: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0;
+      box-sizing: border-box;      
+    }
+
+    .volver-button:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,0.2) 0%, 
+        rgba(255,255,255,0.3) 100%);
+    }
+
+    .volver-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(255,255,255,0.1) 50%, 
+        transparent 80%);
+      animation: shine 4s infinite;
+    }
+
+    .volver-button svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+    }
+
+    .module-button span:first-child {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-button span:last-child {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      letter-spacing: 0.8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .main-button {
+      padding: 20px 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.3));
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 250px;
+    }
+
+    .main-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .secondary-page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes shine {
+      0% { transform: rotate(45deg) translateX(-150%); }
+      100% { transform: rotate(45deg) translateX(150%); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .title h1 {
+        font-size: 2.4rem;
+      }
+      
+      .logo-container {
+        padding: 20px 30px;
+        margin: 30px auto;
+        max-width: 95%;
+      }
+      
+      .logo {
+        max-width: 100%;
+      }
+      
+      .modules-grid {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+        gap: 25px;
+      }
+      
+      .navigation-buttons {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .main-button {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-container">
+    <div class="logo-container">
+      <img src="logo.png" alt="Fiduagaria" class="logo">
+    </div>
+
+     <div class="title">
+      <h1 id="dynamic-title">Bienvenidos PAR ISS</h1>
+      <p>Seleccione el módulo de su interés</p>
+    </div>
+    
+    <!-- Página Principal -->
+    <div id="main-page">
+      <div class="navigation-buttons">
+        <button class="main-button" onclick="loadPage('induccion')">Inducción</button>        
+      </div>
+    </div>
+
+    <!-- Página Inducción -->
+    <div id="induccion" class="secondary-page">
+      <div class="navigation-buttons">
+        <button class="main-button" onclick="loadPage('induccion-modulos')">Cursos</button>
+        <button class="main-button" onclick="loadPage('induccion-evaluaciones')">Evaluaciones</button>
+    <!-- Botón "Inicio" con estilo inline para hacerlo más grande -->
+    <button class="volver-button" onclick="loadPage('main-page')" style="width: 80px; height: 40px; font-size: 14px;
+      border-radius: 10px; background-color: linear-gradient(135deg, 
+        rgba(255,255,255,0.15) 0%, 
+        rgba(255,255,255,0.25) 100%);; color: white; border-radius: 10px;">Inicio</button>
+      </div>
+    </div>
+
+    <!-- Página Reinducción -->
+    <div id="reinduccion" class="secondary-page">
+      <div class="navigation-buttons">
+        <button class="main-button" onclick="loadPage('reinduccion-modulos')">Cursos</button>
+        <button class="main-button" onclick="loadPage('reinduccion-evaluaciones')">Evaluaciones</button>
+    <!-- Botón "Inicio" con estilo inline para hacerlo más grande -->
+    <button class="volver-button" onclick="loadPage('main-page')" style="width: 80px; height: 40px; font-size: 14px;
+      border-radius: 10px; background-color: linear-gradient(135deg, 
+        rgba(255,255,255,0.15) 0%, 
+        rgba(255,255,255,0.25) 100%);; color: white; border-radius: 10px;">Inicio</button>
+      </div>
+    </div>
+
+    <!-- Contenido Dinámico -->
+    <div class="dynamic-content">
+      <!-- Módulos Inducción -->
+      <div id="induccion-modulos" class="secondary-page">
+        <div class="modules-grid">
+          <!-- Módulos 1-11 completos -->
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_02/v4/" class="module-button" target="_blank">
+            <span>GSI y PCN</span>
+            <span>Módulo 1</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_03/v6/" class="module-button" target="_blank">
+            <span>GRO</span>
+            <span>Módulo 2</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_04/v5/" class="module-button" target="_blank">
+            <span>SSTA</span>
+            <span>Módulo 3</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_05/v3/" class="module-button" target="_blank">
+            <span>SARLAFT</span>
+            <span>Módulo 4</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_06/v2/" class="module-button" target="_blank">
+            <span>Ley FATCA</span>
+            <span>Módulo 5</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_07/v3/" class="module-button" target="_blank">
+            <span>SAC</span>
+            <span>Módulo 6</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_12/v1/" class="module-button" target="_blank">
+            <span>SIAR</span>
+            <span>Módulo 7</span>
+          </a>
+        </div>
+        <button class="volver-button" onclick="loadPage('induccion')">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18L9 12L15 6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Evaluaciones Inducción -->
+      <div id="induccion-evaluaciones" class="secondary-page">
+        <div class="modules-grid">
+          <!-- Evaluaciones 1-11 completas -->
+          <a href="https://forms.office.com/r/5EnMznJkBZ" class="module-button" target="_blank">
+            <span>GSI y PCN</span>
+            <span>Evaluación 1</span>
+          </a>
+          <a href="https://forms.office.com/r/XnQGK2KFfA" class="module-button" target="_blank">
+            <span>GRO</span>
+            <span>Evaluación 2</span>
+          </a>
+          <a href="https://forms.office.com/r/w2RrJdXnqm" class="module-button" target="_blank">
+            <span>SSTA</span>
+            <span>Evaluación 3</span>
+          </a>
+          <a href="https://forms.office.com/r/pMmUfsTDHM" class="module-button" target="_blank">
+            <span>SARLAFT</span>
+            <span>Evaluación 4</span>
+          </a>
+          <a href="https://forms.office.com/r/nifQSrhdkP" class="module-button" target="_blank">
+            <span>Ley FATCA</span>
+            <span>Evaluación 5</span>
+          </a>
+          <a href="https://forms.office.com/r/xvrBm15PyZ" class="module-button" target="_blank">
+            <span>SAC</span>
+            <span>Evaluación 6</span>
+          </a>
+          <a href="https://forms.office.com/r/3YfzifuAQZ" class="module-button" target="_blank">
+            <span>SIAR</span>
+            <span>Evaluación 7</span>
+          </a>
+        </div>
+        <button class="volver-button" onclick="loadPage('induccion')">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18L9 12L15 6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Módulos Reinducción -->
+      <div id="reinduccion-modulos" class="secondary-page">
+        <div class="modules-grid">
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_06/v2/" class="module-button" target="_blank">
+            <span>Ley FATCA</span>
+            <span>Módulo 1</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_03/v6/" class="module-button" target="_blank">
+            <span>GRO</span>
+            <span>Módulo 2</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_05/v3/" class="module-button" target="_blank">
+            <span>SARLAFT</span>
+            <span>Módulo 3</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_04/v5/" class="module-button" target="_blank">
+            <span>SSTA</span>
+            <span>Módulo 4</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_12/v1/" class="module-button" target="_blank">
+            <span>SIAR</span>
+            <span>Módulo 5</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_07/v3/" class="module-button" target="_blank">
+            <span>SAC</span>
+            <span>Módulo 6</span>
+          </a>
+          <a href="https://didacsis.com/montajes_didacsis/fiduagraria/induccion/modulo_02/v4/" class="module-button" target="_blank">
+            <span>GSI y PCN</span>
+            <span>Módulo 7</span>
+          </a>
+        </div>
+        <button class="volver-button" onclick="loadPage('reinduccion')">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18L9 12L15 6" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Evaluaciones Reinducción -->
+      <div id="reinduccion-evaluaciones" class="secondary-page">
+        <div class="modules-grid">
+          <a href="https://forms.office.com/r/eibZJ17JXE" class="module-button" target="_blank">
+            <span>Ley FATCA</span>
+            <span>Evaluación 1</span>
+          </a>
+          <a href="https://forms.office.com/r/RuqgZyiLXU" class="module-button" target="_blank">
+            <span>GRO</span>
+            <span>Evaluación 2</span>
+          </a>
+          <a href="https://forms.office.com/r/1ymVGFkgYT" class="module-button" target="_blank">
+            <span>SARLAFT</span>
+            <span>Evaluación 3</span>
+          </a>
+          <a href="https://forms.office.com/r/gS4vzP5f9R" class="module-button" target="_blank">
+            <span>SSTA</span>
+            <span>Evaluación 4</span>
+          </a>
+          <a href="https://forms.office.com/r/pTZXRRfFts" class="module-button" target="_blank">
+            <span>SIAR</span>
+            <span>Evaluación 5</span>
+          </a>
+          <a href="https://forms.office.com/r/5xDLFtBttu" class="module-button" target="_blank">
+            <span>SAC</span>
+            <span>Evaluación 6</span>
+          </a>
+          <a href="https://forms.office.com/r/jk5Pf34hsq" class="module-button" target="_blank">
+            <span>Evaluación GSI y PCN</span>
+            <span>Evaluación 7</span>
+          </a>
+        </div>
+        <button class="volver-button" onclick="loadPage('reinduccion')">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18L9 12L15 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadPage(pageId) {
+      const titleElement = document.getElementById('dynamic-title');
+      
+      // Lógica mejorada para el título
+      if(pageId.startsWith('induccion')) {
+    if (pageId === 'induccion') {
+      titleElement.textContent = 'Inducción';
+    } else if (pageId === 'induccion-modulos') {
+      titleElement.textContent = 'Cursos Inducción';
+    } else if (pageId === 'induccion-evaluaciones') {
+      titleElement.textContent = 'Evaluaciones Inducción';
+    }
+  } else if (pageId.startsWith('reinduccion')) {
+    if (pageId === 'reinduccion') {
+      titleElement.textContent = 'Reinducción';
+    } else if (pageId === 'reinduccion-modulos') {
+      titleElement.textContent = 'Cursos Reinducción';
+    } else if (pageId === 'reinduccion-evaluaciones') {
+      titleElement.textContent = 'Evaluaciones Reinducción';
+    }
+  } else {
+    titleElement.textContent = 'Bienvenidos PAR ISS';
+      }
+
+      // Ocultar todas las páginas
+      document.querySelectorAll('.secondary-page').forEach(el => el.style.display = 'none');
+      document.querySelector('.dynamic-content').style.display = 'none';
+      document.getElementById('main-page').style.display = 'none';
+
+      // Mostrar la página solicitada
+      if (pageId === 'main-page') {
+        document.getElementById('main-page').style.display = 'block';
+      } else {
+        const page = document.getElementById(pageId);
+        if (page) {
+          page.style.display = 'block';
+          if (pageId.includes('modulos') || pageId.includes('evaluaciones')) {
+            document.querySelector('.dynamic-content').style.display = 'block';
+          }
+        }
+      }
+    }
+
+    window.onload = () => loadPage('main-page');
+</script>
+</body>
+</html>
